@@ -59,7 +59,7 @@ def start_conversion():
                         text_file.write(text)
                         text_file.write("\n\n") # add space between pages            
                         
-                        messagebox.showinfo("Success", "File converted successfully")
+        messagebox.showinfo("Success", "File converted successfully")
                         
     except Exception as e:
         messagebox.showerror("Error", str(e))
