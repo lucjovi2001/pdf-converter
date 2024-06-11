@@ -25,15 +25,42 @@ def choose_dir():
 def start_conversion():
     try:
         pdf_path = selected_file.get()
+        
         if not pdf_path:
             messagebox.showerror("Error", "No PDF file selected")
             return
+        
         if not output_file.get():
             raise ValueError("Output file name cannot be empty")
+        
         output_dir_path = output_dir.get()
+        
         if not output_dir_path:
             messagebox.showerror("Error", "No output directory selected")
             return
+        
+        progress['value'] = 0
+        output_path = os.path.join(output_dir_path, f"{output_file.get()}.txt")
+        
+        with open(pdf_path, "rb") as pdf_file:
+            reader = PdfReader(pdf_file)
+            total_pages = len(reader.pages)
+            
+            with open(output_path, "w", encoding="utf-8") as text_file:
+                for i, page in enumerate(reader.pages):
+                    progress['value'] = ((i + 1) / total_pages) * 100
+                    root.update_idletasks()
+                    time.sleep(0.5)
+                    
+                    text = page.extract_text()
+                    
+                    if text:
+                        text_file.write(f"Page {i + 1}\n {"=" * 20}\n")
+                        text_file.write(text)
+                        text_file.write("\n\n") # add space between pages            
+                        
+                        messagebox.showinfo("Success", "File converted successfully")
+                        
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
