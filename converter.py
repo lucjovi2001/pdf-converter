@@ -4,10 +4,13 @@ from tkinterdnd2 import DND_FILES, TkinterDnD
 from PyPDF2 import PdfReader
 import os, time
 
+def open_file():
+    pass
+
 def choose_dir():
     pass
 
-def open_file():
+def start_conversion():
     pass
 
 # main window
@@ -31,3 +34,8 @@ tk.Entry(root, textvariable=selected_file, state="readonly").pack()
 
 open_button = tk.Button(root, text="Open PDF", command=open_file)
 open_button.pack()
+
+convert_button = tk.Button(root, text="Convert", command=start_conversion)
+convert_button.pack()
+
+root.mainloop()
