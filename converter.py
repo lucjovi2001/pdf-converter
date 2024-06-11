@@ -16,19 +16,38 @@ def drop(event):
         file_path = file_path[1:-1]
     selected_file.set(file_path)
 
+# select file directory
 def choose_dir():
-    pass
+    directory = filedialog.askdirectory()
+    output_dir.set(directory)
 
+# pdf converter, progress bar, error handling    
 def start_conversion():
-    pass
+    try:
+        pdf_path = selected_file.get()
+        if not pdf_path:
+            messagebox.showerror("Error", "No PDF file selected")
+            return
+        if not output_file.get():
+            raise ValueError("Output file name cannot be empty")
+        output_dir_path = output_dir.get()
+        if not output_dir_path:
+            messagebox.showerror("Error", "No output directory selected")
+            return
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
 
 # main window
 root = TkinterDnD.Tk()
 root.title("PDF Converter")
 
 # register drag and drop
-root.drop_taret_register(DND_FILES)
+root.drop_target_register(DND_FILES)
 root.dnd_bind("<<Drop>>", drop)
+
+# progress bar
+progress = ttk.Progressbar(root, orient="horizontal", length=200, mode="determinate")
+progress.pack()
 
 # widgets
 output_dir = tk.StringVar()
@@ -39,7 +58,7 @@ tk.Label(root, text="Output Directory").pack()
 tk.Entry(root, textvariable=output_dir).pack()
 tk.Button(root, text="Browse", command=choose_dir).pack()
 
-tk.Label(root, text="Output File").pack()
+tk.Label(root, text="Output File Name").pack()
 tk.Entry(root, textvariable=output_file).pack()
 
 tk.Label(root, text="Select PDF File").pack()
