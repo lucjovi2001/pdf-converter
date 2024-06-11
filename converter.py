@@ -55,7 +55,7 @@ def start_conversion():
                     text = page.extract_text()
                     
                     if text:
-                        text_file.write(f"Page {i + 1}\n {"=" * 20}\n")
+                        text_file.write(f"Page {i + 1}\n {'=' * 20}\n")
                         text_file.write(text)
                         text_file.write("\n\n") # add space between pages            
                         
