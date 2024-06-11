@@ -5,7 +5,9 @@ from PyPDF2 import PdfReader
 import os, time
 
 def open_file():
-    pass
+    file_path = filedialog.askopenfilename(filetypes=[("PDF", "*.pdf"), ("All", "*.*")])
+    if file_path:
+        selected_file.set(file_path)
 
 def choose_dir():
     pass
