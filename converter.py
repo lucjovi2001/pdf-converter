@@ -8,6 +8,13 @@ def open_file():
     file_path = filedialog.askopenfilename(filetypes=[("PDF", "*.pdf"), ("All", "*.*")])
     if file_path:
         selected_file.set(file_path)
+       
+# drag and drop function 
+def drop(event):
+    file_path = event.data
+    if file_path.startwith("{") and file_path.endswith("}"):
+        file_path = file_path[1:-1]
+    selected_file.set(file_path)
 
 def choose_dir():
     pass
@@ -18,6 +25,10 @@ def start_conversion():
 # main window
 root = TkinterDnD.Tk()
 root.title("PDF Converter")
+
+# register drag and drop
+root.drop_taret_register(DND_FILES)
+root.dnd_bind("<<Drop>>", drop)
 
 # widgets
 output_dir = tk.StringVar()
